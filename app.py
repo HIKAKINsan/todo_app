@@ -25,12 +25,46 @@ def insert_exe():
         error = '登録失敗'
         return render_template('insert_form.html', error=error)
     
+
 @app.route('/select_todo')
 def select_todo():
     rows = db.select_todo()
     
     return render_template('todo_list.html',rows=rows)
+
+@app.route('/coplate_todo', methods=['POST', 'GET'])
+def complate_todo():
+    todo_id = int(request.args.get('id'))
+    complate = request.form.get('complate')
     
+    if complate == 'on':
+        complate = True
+    else:
+        return redirect(url_for('select_todo'))
+            
+    count = db.complate_todo(todo_id, complate)
+    
+    if count == 1:
+        msg = '完了しました'
+        return render_template('todo_finish.html', msg=msg)
+    else:
+        error = '完了できない'
+        return render_template('todo_list.html', error=error)
+    
+
+@app.route('/select_complate_todo')
+def select_complate_todo():
+    rows = db.select_complate_todo()
+    
+    return render_template('complate_todo_list.html',rows=rows)
+
+@app.route('/edit_form')
+def edit_form():
+    todo_id = int(request.args.get('id'))
+    
+    row = db.id_select_todo(todo_id)
+    
+    return render_template('edit_form.html', row=row)
 if __name__ == '__main__':
  app.run(debug=True)
 
