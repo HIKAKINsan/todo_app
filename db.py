@@ -81,3 +81,17 @@ def id_select_todo(id):
     connection.close()
     
     return row
+
+def edit_todo(id, todo, deadline, priority):
+    sql = 'UPDATE todo SET todo = %s, deadline = %s, priority = %s WHERE id = %s'
+    
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute(sql, (todo, deadline, priority, id))
+    count = cursor.rowcount
+    connection.commit()
+    
+    cursor.close()
+    connection.close()
+    
+    return count

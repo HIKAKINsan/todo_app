@@ -65,6 +65,21 @@ def edit_form():
     row = db.id_select_todo(todo_id)
     
     return render_template('edit_form.html', row=row)
+
+
+@app.route('/edit_exe', methods=['POST', 'GET'])
+def edit_exe():
+    todo_id = request.args.get('id')
+    todo = request.form.get('todo')
+    deadline = request.form.get('deadline')
+    priority = request.form.get('priority')
+    
+    count = db.edit_todo(todo_id, todo, deadline, priority)
+    
+    if count == 1:
+        msg = '編集しました'
+        return render_template('edit_finish.html',msg=msg)
+    
 if __name__ == '__main__':
  app.run(debug=True)
 
