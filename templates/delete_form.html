@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>todo</th>
+            <th>期限</th>
+            <th>優先度</th>
+            <th></th>
+        </tr>
+        {%for row in rows%}
+        <tr>
+            <td>{{row[1]}}</td>
+            <td>{{row[2]}}</td>
+            <td>{%if row[3]==0%}高{%elif row[3]==1%}中{%else%}小{%endif%}</td>
+            <td><a href="{{url_for('delete_exe')}}?id={{row[0]}}"onclick="return confirm('本当に削除しますか')">削除</a></td>
+        </tr>
+        {%endfor%}
+
+    </table>
+    <a href="{{url_for('index')}}">戻る</a>
+</body>
+</html>

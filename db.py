@@ -95,3 +95,17 @@ def edit_todo(id, todo, deadline, priority):
     connection.close()
     
     return count
+
+def delete_todo(id):
+    sql = 'DELETE FROM todo WHERE id = %s'
+    
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute(sql, (id,))
+    count = cursor.rowcount
+    connection.commit()
+    
+    cursor.close()
+    connection.close()
+    
+    return count

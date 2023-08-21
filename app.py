@@ -80,6 +80,21 @@ def edit_exe():
         msg = '編集しました'
         return render_template('edit_finish.html',msg=msg)
     
+@app.route('/delete_form')
+def delete_form():
+    rows = db.select_todo()
+    
+    return render_template('delete_form.html',rows=rows)
+
+@app.route('/delete_exe')
+def delete_exe():
+    todo_id = request.args.get('id')
+    count = db.delete_todo(todo_id)
+    
+    if count == 1:
+        msg = '削除成功'
+        return  render_template('delete_finish.html',msg=msg)
+
 if __name__ == '__main__':
  app.run(debug=True)
 
